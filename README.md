@@ -1,8 +1,8 @@
 
 
-An app to make forms and gather responses. <br/><br/>
+An app to make forms and gather responses. <br/>
 
-<a href="https://form-idable.herokuapp.com">LINK</a><br/><br/>
+<a href="https://form-idable.herokuapp.com">LINK</a><br/><br/><br/>
 **Example Form**<br/>
 <img src="./assets/Capture1.PNG"/><br/><br/>
 **Editing Mode**<br/>
