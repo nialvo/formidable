@@ -423,6 +423,8 @@ function ALTEditForm() {
 
     ////////////////////////scratch/function area/////////////////////////////////////////////////////////////////////
 
+    const [saving, setSaving] = useState(false);
+
     const [pieces, _setPieces] = useState([]);
     const pieceArrRef = useRef(pieces);
     const setPieces = (d) => {
@@ -829,6 +831,8 @@ function ALTEditForm() {
             return x;
         }));
 
+        displaySave();
+
         console.log(zz)
     }
     async function publishform() {
@@ -1094,6 +1098,31 @@ function ALTEditForm() {
         setPieces(pieces.filter(p => p.piid != c))
     }
 
+    const XX= ({save})=>{
+        if(save==true){
+            return(
+                <Card sx={{...formsx, display:"flex", flexDirection:"column", justifyContent:"center"}}>
+                    
+                    <Typography sx={{ ...fontsx, ...normsx, ...gray, margin:"auto" }}>Your form has been saved!</Typography>
+                </Card>
+            )
+        }else{
+            return(
+                <Card sx={formsx}>
+                    <Titler form={form} sx={{ borderLeft: "5px solid white" }} />
+                    <Editor pieces={pieces} />
+                </Card>
+            )
+        }
+
+
+    }
+
+    function displaySave(){
+        setSaving(true);
+        setTimeout(()=>{setSaving(false)},1000);
+    }
+
     return (
         <>
             <CssBaseline />
@@ -1112,10 +1141,7 @@ function ALTEditForm() {
                     </Typography>
                 </Box>
 
-                <Card sx={formsx}>
-                    <Titler form={form} sx={{ borderLeft: "5px solid white" }} />
-                    <Editor pieces={pieces} />
-                </Card>
+                <XX save={saving}/>
 
                 <Box sx={rightButtonssx}>
                     <ButtonsTwo conf={confirm} key={"buttons2"} />

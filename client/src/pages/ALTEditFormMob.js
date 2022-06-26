@@ -343,6 +343,8 @@ function ALTEditFormMob() {
     };
     ////////////////////////scratch/function area/////////////////////////////////////////////////////////////////////
 
+    const [saving, setSaving] = useState(false);
+
     const [pieces, _setPieces] = useState([]);
     const pieceArrRef = useRef(pieces);
     const setPieces = (d) => {
@@ -687,30 +689,28 @@ function ALTEditFormMob() {
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("header", l);
-                    }}>Add Header</MenuItem>
+                    }}>Header</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("break", l);
-                    }}>Add Divider</MenuItem>
+                    }}>Divider</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("question", l, "ss");
-                    }}>Add Single Select Q</MenuItem>
+                    }}>Single Select</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("question", l, "ms");
-                    }}>Add Multiple Select Q</MenuItem>
+                    }}>Multiple Select</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("question", l, "st");
-                    }}>Add Single Line Text Q</MenuItem>
+                    }}>Single Line Text</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose();
                         addPiece("question", l, "mt");
-                    }}>Add Multiple Line Text Q</MenuItem>
-                    <MenuItem onClick={() => {
-                        handleClose();
-                    }}>Close Menu</MenuItem>
+                    }}>Multiple Line Text</MenuItem>
+                    
                 </Menu>
             </div>
         );
@@ -811,6 +811,8 @@ function ALTEditFormMob() {
             return x;
         }));
 
+        displaySave();
+
         console.log(zz)
     }
     async function publishform() {
@@ -860,8 +862,10 @@ function ALTEditFormMob() {
             )
         } else if (conf.clear == "yes") {
             return (
-                <Stack spacing={2} direction="column">
-                    <Button variant="contained" onClick={clearform} color="error">CONFIRM CLEAR </Button>
+                <Stack sx={{paddingTop:"10vh", paddingLeft:"10vw", paddingRight:"10vw"}} spacing={2} direction="column">
+                    <Button variant="contained" onClick={clearform} color="success">CONFIRM CLEAR </Button>
+                    <Button variant="contained" onClick={clearform} color="success">CONFIRM CLEAR2 </Button>
+                    <Button variant="contained" onClick={clearform} color="success">CONFIRM CLEAR3 </Button>
                     <Box sx={{ display: "flex" }}>
                         <Typography sx={{ ...fontsx, ...normsx, ...gray }}>All questions will be deleted in form and responses.</Typography>
                     </Box>
@@ -872,7 +876,7 @@ function ALTEditFormMob() {
 
         } else {
             return (
-                <Stack spacing={2} direction="column">
+                <Stack sx={{paddingTop:"10vh", paddingLeft:"10vw", paddingRight:"10vw"}} spacing={2} direction="column">
                     <Button variant="contained" onClick={deleteform} color="error">CONFIRM DELETE </Button>
                     <Box sx={{ display: "flex" }}>
                         <Typography sx={{ ...fontsx, ...normsx, ...gray }}>Form, response link, and responses will be deleted.</Typography>
@@ -885,7 +889,16 @@ function ALTEditFormMob() {
         }
     }
 
-    function XX({ conf }) {
+    function XX({ conf, save }) {
+
+        if(save==true){
+            return(
+                <Card sx={{...formsx, display:"flex", flexDirection:"column", justifyContent:"center"}}>
+                    
+                    <Typography sx={{ ...fontsx, ...normsx, ...gray, margin:"auto" }}>Your form has been saved!</Typography>
+                </Card>
+            )
+        }else{
 
         if (conf.clear == "no" & conf.delete == "no") {
             return (
@@ -909,10 +922,10 @@ function ALTEditFormMob() {
             )
         } else if (conf.clear == "yes") {
             return (
-                <Stack spacing={2} direction="column">
+                <Stack sx={{paddingTop:"30vh", paddingLeft:"15vw", paddingRight:"15vw"}} spacing={3} direction="column">
                     <Button variant="contained" onClick={clearform} color="error">CONFIRM CLEAR </Button>
                     <Box sx={{ display: "flex" }}>
-                        <Typography sx={{ ...fontsx, ...normsx, ...gray }}>All questions will be deleted in form and responses.</Typography>
+                        <Typography sx={{ ...fontsx, ...normsx, ...gray, margin:"auto" }}>All questions will be deleted in form and responses.</Typography>
                     </Box>
                     <Button variant="outlined" onClick={cancel} >CANCEL</Button><br /><br />
                 </Stack>
@@ -920,15 +933,16 @@ function ALTEditFormMob() {
 
         } else {
             return (
-                <Stack spacing={2} direction="column">
+                <Stack sx={{paddingTop:"30vh", paddingLeft:"15vw", paddingRight:"15vw"}} spacing={3} direction="column">
                     <Button variant="contained" onClick={deleteform} color="error">CONFIRM DELETE </Button>
                     <Box sx={{ display: "flex" }}>
-                        <Typography sx={{ ...fontsx, ...normsx, ...gray }}>Form, response link, and responses will be deleted.</Typography>
+                        <Typography sx={{ ...fontsx, ...normsx, ...gray, margin:"auto" }}>Form, response link, and responses will be deleted.</Typography>
                     </Box>
                     <Button variant="outlined" onClick={cancel} >CANCEL</Button><br /><br />
                 </Stack>
             )
 
+        }
         }
     }
 
@@ -1144,12 +1158,17 @@ function ALTEditFormMob() {
         setPieces(pieces.filter(p => p.piid != c))
     }
 
+    function displaySave(){
+        setSaving(true);
+        setTimeout(()=>{setSaving(false)},1000);
+    }
+
 
     return (
         <>
 
             <CssBaseline />
-            <XX form={form} pieces={pieces} conf={confirm} />
+            <XX form={form} pieces={pieces} conf={confirm} save={saving} />
             <Signout sx={{ left: "54px" }} />
         </>
     )
